@@ -20,7 +20,7 @@ dbConn.connect();
 app.get("/api/users", function (req, res) {
   console.log("/api/users");
   dbConn.query(
-    "SELECT * FROM fti_employee where e_status <> 3 AND e_status <> 33 AND e_email_address <> '' ORDER BY e_first_name LIMIT 10",
+    "SELECT fti_employee.e_id, fti_employee.employee_id, fti_employee.t_id, fti_employee.e_first_name, fti_employee.e_last_name, fti_employee.e_second_name, fti_employee.e_dob, fti_employee.e_email_address, fti_employee.e_password, fti_employee.e_telephone, fti_employee.e_address, fti_employee.e_post_code, fti_employee.e_remaining_holiday, fti_employee.e_total_leave_points, fti_employee.right_work_uk, fti_employee.uk_evidence, fti_employee.e_status, fti_employee.employee_image,fti_employment_details.role_id, fti_employment_details.access_levels, fti_employment_details.office_id, fti_employment_details.managers_id, fti_employment_details.start_date, fti_employment_details.d_id, fti_employment_details.salary, fti_employee_role.role_name,fti_departments.department_name,fti_status_code.status_name FROM fti_employee JOIN fti_employment_details ON fti_employment_details.employee_id=fti_employee.employee_id JOIN fti_employee_role ON fti_employee_role.role_id=fti_employment_details.role_id JOIN fti_departments ON fti_departments.d_id=fti_employment_details.d_id JOIN fti_status_code ON fti_status_code.status_code=fti_employee.e_status where fti_employee.e_status <> 3 AND fti_employee.e_status <> 33 AND fti_employee.e_email_address <> '' ORDER BY fti_employee.e_first_name LIMIT 30",
     function (error, results, fields) {
       if (error) throw error;
       return res.send({ error: false, data: results, message: "users list." });
@@ -36,7 +36,7 @@ app.get("/api/user/:id", function (req, res) {
       .send({ error: true, message: "Please provide user_id" });
   }
   dbConn.query(
-    "SELECT * FROM fti_employee where employee_id=?",
+    "SELECT fti_employee.e_id, fti_employee.employee_id, fti_employee.t_id, fti_employee.e_first_name, fti_employee.e_last_name, fti_employee.e_second_name, fti_employee.e_dob, fti_employee.e_email_address, fti_employee.e_password, fti_employee.e_telephone, fti_employee.e_address, fti_employee.e_post_code, fti_employee.e_remaining_holiday, fti_employee.e_total_leave_points, fti_employee.right_work_uk, fti_employee.uk_evidence, fti_employee.e_status, fti_employee.employee_image,fti_employment_details.role_id, fti_employment_details.access_levels, fti_employment_details.office_id, fti_employment_details.managers_id, fti_employment_details.start_date, fti_employment_details.d_id, fti_employment_details.salary, fti_employee_role.role_name,fti_departments.department_name,fti_status_code.status_name FROM fti_employee JOIN fti_employment_details ON fti_employment_details.employee_id=fti_employee.employee_id JOIN fti_employee_role ON fti_employee_role.role_id=fti_employment_details.role_id JOIN fti_departments ON fti_departments.d_id=fti_employment_details.d_id JOIN fti_status_code ON fti_status_code.status_code=fti_employee.e_status where fti_employee.employee_id=?",
     user_id,
     function (error, results, fields) {
       if (error) throw error;
